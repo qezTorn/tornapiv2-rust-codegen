@@ -21,7 +21,7 @@ jobs:
       - name: Swagger Codegen
         uses: bjerkio/swagger-codegen-action@v1
         with:
-          args: -i https://www.torn.com/swagger/openapi.json -l rust
+          args: generate -i https://www.torn.com/swagger/openapi.json -l rust
 
       # Optionally, commit and push the generated code back to the repository
       - name: Commit and push changes
