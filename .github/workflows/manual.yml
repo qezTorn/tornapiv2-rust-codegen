@@ -17,12 +17,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       
-      # Run Swagger Codegen
-      - name: Swagger Codegen
-        uses: bjerkio/swagger-codegen-action@v1
+      - name: Generate Client Library w/ the OpenAPITools Generator
+          # You may pin to the exact commit or the version.
+          # uses: openapi-generators/openapitools-generator-action@b729d184e6b3459572c37c0e37f88a832e69b552
+        uses: openapi-generators/openapitools-generator-action@v1.5.0
         with:
-          args: "generate -i https://www.torn.com/swagger/openapi.json -l rust"
-
+            # The name of the generator (i.e. the language to generate the client library in) to use e.g. "typescript-angular"
+          generator: rust
+           
       # Optionally, commit and push the generated code back to the repository
       - name: Commit and push changes
         run: |
