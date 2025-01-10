@@ -13,23 +13,26 @@ jobs:
   swagger_codegen:
     runs-on: ubuntu-latest
     steps:
-      # Checkout the repository to use the generated code
+      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          # Ensure you fetch all history to avoid shallow clones
+          fetch-depth: 0
       
+      # Step 2: Generate Client Library using OpenAPI Tools
       - name: Generate Client Library w/ the OpenAPITools Generator
-          # You may pin to the exact commit or the version.
-          # uses: openapi-generators/openapitools-generator-action@b729d184e6b3459572c37c0e37f88a832e69b552
         uses: openapi-generators/openapitools-generator-action@v1.5.0
         with:
-            # The name of the generator (i.e. the language to generate the client library in) to use e.g. "typescript-angular"
           generator: rust
-           
-      # Optionally, commit and push the generated code back to the repository
+      
+      # Step 3: Commit and push changes
       - name: Commit and push changes
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }} # Use the token from secrets
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Auto-generated code using Swagger Codegen"
-          git push
+          git diff --cached --quiet || git commit -m "Auto-generated code using Swagger Codegen"
+          git push https://$GH_PAT@github.com/${{ github.repository }} HEAD:main
