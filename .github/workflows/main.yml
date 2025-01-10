@@ -1,7 +1,10 @@
-- name: Swagger Codegen
-  # You may pin to the exact commit or the version.
-  # uses: bjerkio/swagger-codegen-action@22db9a73c06c0523d341a4a32e4e15facd0d34e4
-  uses: bjerkio/swagger-codegen-action@v1
+  # uses: FinalBuild-Studio/swagger-codegen-action@908337d287b51f0a71bef2adb8da5b25497b49e8
+  uses: FinalBuild-Studio/swagger-codegen-action@v1.2
   with:
-    # Arguments
-    args: generate -i https://www.torn.com/swagger/openapi.json -l rust 
+    # Swagger language
+    language: rust
+    # Swagger file
+    input: https://www.torn.com/swagger/openapi.json
+    # swagger-codegen-cli action
+    action: generate
+          
